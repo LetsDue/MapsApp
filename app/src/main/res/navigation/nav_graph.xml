@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            xmlns:tools="http://schemas.android.com/tools" android:id="@+id/nav_graph"
+            app:startDestination="@id/mainFragment">
+
+    <fragment android:id="@+id/mainFragment" android:name="com.karo.mapsapp.MainFragment" android:label="fragment_main"
+              tools:layout="@layout/fragment_main">
+        <action android:id="@+id/action_mainFragment_to_categoriesFragment" app:destination="@id/categoriesFragment"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment android:id="@+id/categoriesFragment" android:name="com.karo.mapsapp.CategoriesFragment"
+              android:label="CategoriesFragment">
+        <action android:id="@+id/action_categoriesFragment_to_itemsFragment" app:destination="@id/itemsFragment"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+    <fragment android:id="@+id/presentationFragment" android:name="com.karo.mapsapp.PresentationFragment"
+              android:label="fragment_presentation" tools:layout="@layout/fragment_presentation">
+    <argument android:name="name"
+              android:defaultValue="none"
+              app:argType="string"/>
+   </fragment>
+
+    <fragment android:id="@+id/itemsFragment" android:name="com.karo.mapsapp.ItemsFragment"
+              android:label="fragment_items" tools:layout="@layout/fragment_items">
+        <argument android:name="categoryID"
+                  android:defaultValue="0L"
+                  app:argType="long"
+                  />
+        <action android:id="@+id/action_itemsFragment_to_presentationFragment"
+                app:destination="@id/presentationFragment"
+                app:popEnterAnim="@anim/slide_in_left"
+                app:popExitAnim="@anim/slide_out_right"
+                app:enterAnim="@anim/slide_in_right"
+                app:exitAnim="@anim/slide_out_left"/>
+    </fragment>
+</navigation>
