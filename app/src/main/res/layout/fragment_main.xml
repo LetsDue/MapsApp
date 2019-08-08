@@ -41,5 +41,33 @@
             app:layout_constraintLeft_toRightOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_bias="0.791" app:layout_constraintVertical_bias="0.071"/>
+    <ImageView
+            android:src="@android:drawable/stat_sys_phone_call"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/imageView" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toTopOf="@+id/imageView3" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
+    <ImageView
+            android:src="@android:drawable/sym_action_email"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:id="@+id/imageView3" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp"/>
+    <TextView
+            android:text="111 111 111"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:id="@+id/textView3"
+            app:layout_constraintStart_toEndOf="@+id/imageView" android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp" app:layout_constraintBottom_toTopOf="@+id/textView4"/>
+    <TextView
+            android:text="karool019@gmail.com"
+            android:layout_width="wrap_content"
+            android:layout_height="25dp"
+            android:id="@+id/textView4" android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintStart_toEndOf="@+id/imageView3"
+            android:layout_marginStart="8dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -2,11 +2,14 @@ package com.karo.mapsapp
 
 
 import android.app.DownloadManager
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -39,9 +42,12 @@ class MainFragment : Fragment(), View.OnClickListener {
         super.onViewCreated(view, savedInstanceState)
         var title = "Aplikacja"
         (activity as AppCompatActivity).supportActionBar?.title = title
+
+        (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(0xFF242460.toInt()))
+
+
         navController = Navigation.findNavController(view)
         view.findViewById<Button>(R.id.categories_Btn).setOnClickListener (this)
-
     }
 
     override fun onClick(v: View?) {

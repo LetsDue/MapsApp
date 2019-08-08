@@ -46,7 +46,6 @@ class PresentationFragment : Fragment() {
         locationArrayMap["ratusz"] = "52.545288,19.684685"
         locationArrayMap["zoo"] = "52.536772,19.700291"
         var mapBtn:ImageButton= view.findViewById(R.id.mapBtn)
-        
         mapBtn.setOnClickListener()
         {
             val label = name
