@@ -2,18 +2,24 @@ package com.karo.mapsapp
 
 
 import android.app.DownloadManager
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context.CLIPBOARD_SERVICE
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import kotlinx.android.synthetic.main.fragment_main.*
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import java.io.IOException
@@ -30,12 +36,48 @@ import java.io.IOException
  */
 class MainFragment : Fragment(), View.OnClickListener {
     lateinit var navController: NavController
+    lateinit var myClipboard: ClipboardManager
+    lateinit var clickTextView: TextView
+    lateinit var clickTextViewE: TextView
+    lateinit var imageViewCategory: ImageView
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        var toast: Toast = Toast.makeText(context, "E-mail został skopiowany", Toast.LENGTH_SHORT)
+        val view = inflater!!.inflate(R.layout.fragment_main, container, false)
+        clickTextView = view.findViewById(R.id.phoneText)
+        clickTextView.setOnClickListener()
+        {
+            var myClip = ClipData.newPlainText("text", phoneText.text)
+            myClipboard?.primaryClip=myClip
+            if (toast!= null) {
+                toast.cancel()
+            }
+            toast= Toast.makeText(context, "Numer został skopiowany", Toast.LENGTH_SHORT)
+            toast.show()
+        }
+        clickTextViewE = view.findViewById(R.id.emailText)
+        clickTextViewE.setOnClickListener()
+        {
+            var myClip = ClipData.newPlainText("text", emailText.text)
+            myClipboard?.primaryClip=myClip
+
+            if (toast!= null) {
+                toast.cancel()
+            }
+            toast= Toast.makeText(context, "E-mail został skopiowany", Toast.LENGTH_SHORT)
+            toast.show()
+        }
+        imageViewCategory = view.findViewById(R.id.categoriesIcon)
+        imageViewCategory.setOnClickListener()
+        {
+            navController!!.navigate(R.id.action_mainFragment_to_categoriesFragment)
+        }
+
+
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -45,16 +87,14 @@ class MainFragment : Fragment(), View.OnClickListener {
 
         (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(0xFF242460.toInt()))
 
-
+        myClipboard = (activity as AppCompatActivity).getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         navController = Navigation.findNavController(view)
-        view.findViewById<Button>(R.id.categories_Btn).setOnClickListener (this)
+
     }
 
     override fun onClick(v: View?) {
         when(v!!.id)
         {
-            R.id.categories_Btn -> navController!!.navigate(R.id.action_mainFragment_to_categoriesFragment)
-
         }
     }
 }
