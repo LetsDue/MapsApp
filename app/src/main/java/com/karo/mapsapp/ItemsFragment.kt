@@ -60,6 +60,8 @@ class ItemsFragment : Fragment() {
         listView.setOnItemClickListener{ _, _, position, _ ->
             var name = listView.getItemAtPosition(position).toString()
             var bundle = bundleOf("name" to name)
+            //var i:Item = Item("name","cat","geo","de")
+            //var bundle = bundleOf("name" to i)
             navController!!.navigate(
                 R.id.action_itemsFragment_to_presentationFragment,
                 bundle

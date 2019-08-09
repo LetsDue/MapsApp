@@ -30,7 +30,6 @@ class PresentationFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         name = arguments!!.getString("name")
-
     }
 
     override fun onCreateView(
