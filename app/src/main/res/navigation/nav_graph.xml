@@ -29,9 +29,9 @@
 
     <fragment android:id="@+id/itemsFragment" android:name="com.karo.mapsapp.ItemsFragment"
               android:label="fragment_items" tools:layout="@layout/fragment_items">
-        <argument android:name="categoryID"
-                  android:defaultValue="0L"
-                  app:argType="long"
+        <argument android:name="categoryName"
+                  android:defaultValue="none"
+                  app:argType="string"
                   />
         <action android:id="@+id/action_itemsFragment_to_presentationFragment"
                 app:destination="@id/presentationFragment"

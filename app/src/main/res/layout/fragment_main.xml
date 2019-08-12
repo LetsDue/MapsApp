@@ -60,20 +60,31 @@
             android:layout_width="395dp"
             android:layout_height="1dp"
             android:background="?android:attr/listDivider"
-            tools:layout_editor_absoluteX="8dp" app:layout_constraintTop_toBottomOf="@+id/searchIcon"/>
+            app:layout_constraintTop_toBottomOf="@+id/searchIcon" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"/>
     <View
             android:id="@+id/divider2"
             android:layout_width="1dp"
             android:layout_height="180dp"
             android:background="?android:attr/listDivider"
-            tools:layout_editor_absoluteY="8dp" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp" app:layout_constraintTop_toTopOf="parent"/>
     <View
             android:id="@+id/divider3"
             android:layout_width="395dp"
             android:layout_height="2dp"
             android:background="?android:attr/listDivider"
-            tools:layout_editor_absoluteX="8dp" app:layout_constraintBottom_toTopOf="@+id/phoneText"
-            android:layout_marginBottom="8dp"/>
+            app:layout_constraintBottom_toTopOf="@+id/phoneText"
+            android:layout_marginBottom="8dp" app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginStart="8dp" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintHorizontal_bias="0.0"/>
+    <TextView
+            android:text="TextView"
+            android:layout_width="380dp"
+            android:layout_height="305dp"
+            android:id="@+id/textView" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            android:layout_marginBottom="3dp" app:layout_constraintBottom_toTopOf="@+id/divider3"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

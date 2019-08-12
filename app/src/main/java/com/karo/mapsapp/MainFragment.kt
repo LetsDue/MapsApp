@@ -1,28 +1,24 @@
 package com.karo.mapsapp
 
 
-import android.app.DownloadManager
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
-import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import com.google.firebase.firestore.FirebaseFirestore
+
+
 import kotlinx.android.synthetic.main.fragment_main.*
-import okhttp3.OkHttpClient
-import okhttp3.Response
-import java.io.IOException
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -34,16 +30,21 @@ import java.io.IOException
  * A simple [Fragment] subclass.
  *
  */
+
 class MainFragment : Fragment(), View.OnClickListener {
     lateinit var navController: NavController
     lateinit var myClipboard: ClipboardManager
     lateinit var clickTextView: TextView
     lateinit var clickTextViewE: TextView
     lateinit var imageViewCategory: ImageView
+    val db = FirebaseFirestore.getInstance()
+
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        getItemsData()
         var toast: Toast = Toast.makeText(context, "E-mail został skopiowany", Toast.LENGTH_SHORT)
         val view = inflater!!.inflate(R.layout.fragment_main, container, false)
         clickTextView = view.findViewById(R.id.phoneText)
@@ -76,6 +77,15 @@ class MainFragment : Fragment(), View.OnClickListener {
         }
 
 
+        val textView = view.findViewById<TextView>(R.id.textView)
+        val searchIcon = view.findViewById<ImageView>(R.id.searchIcon)
+
+        searchIcon.setOnClickListener()
+        {
+
+        }
+
+
         // Inflate the layout for this fragment
         return view
     }
@@ -90,11 +100,28 @@ class MainFragment : Fragment(), View.OnClickListener {
         myClipboard = (activity as AppCompatActivity).getSystemService(CLIPBOARD_SERVICE) as ClipboardManager
         navController = Navigation.findNavController(view)
 
+// ...
+
+
     }
 
     override fun onClick(v: View?) {
         when(v!!.id)
         {
+            R.id.searchIcon ->{
+            }
         }
+    }
+
+    fun getItemsData() {
+        db.collection("items")
+        .get()
+            .addOnSuccessListener { querySnapshot ->
+                // Successfully received data. List in querySnapshot.documents
+                ItemsList  = querySnapshot.toObjects(Item::class.java)
+            }
+            .addOnFailureListener { exception ->
+                // An error occurred while getting data
+            }
     }
 }
