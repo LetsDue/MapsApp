@@ -46,6 +46,7 @@ class MainFragment : Fragment(), View.OnClickListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        CategoryList = mutableListOf()
         addDatabaseListener()
         var toast: Toast = Toast.makeText(context, "E-mail został skopiowany", Toast.LENGTH_SHORT)
         val view = inflater!!.inflate(R.layout.fragment_main, container, false)
@@ -127,12 +128,19 @@ class MainFragment : Fragment(), View.OnClickListener {
                 return@addSnapshotListener
             }
 
-            if (snapshot != null && snapshot!=null) {
+            if (snapshot != null) {
                 ItemsList  = snapshot.toObjects(Item::class.java)
+                ItemsList?.forEach { item-> item.category?.forEach { cat ->
+                    if(CategoryList?.contains(cat)==false){
+                        CategoryList?.add(cat)
+                    }
+                    }}
+                CategoryList?.sort()
 
             } else {
                 Log.d("tag", "Current data: null")
             }
         }
+
     }
 }

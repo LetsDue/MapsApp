@@ -12,6 +12,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.os.bundleOf
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +28,6 @@ class CategoriesFragment : Fragment(), View.OnClickListener {
     override fun onClick(p0: View?) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
-
     lateinit var navController: NavController
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,24 +39,18 @@ class CategoriesFragment : Fragment(), View.OnClickListener {
         var title="Kategorie"
         (activity as AppCompatActivity).supportActionBar?.title = title
 
-        //var categories:Array<String> = arrayOf("kat1", "kat2", "kat3")
-        //var listViewAdapter:ArrayAdapter<String> = ArrayAdapter(activity, android.R.layout.simple_list_item_1,categories )
-        var listaC : MutableList<String> = mutableListOf()
-        ItemsList?.forEach { a->a.category?.forEach { b->listaC.add(b) } }
-        var e:ArrayAdapter<String> = ArrayAdapter(activity, android.R.layout.simple_list_item_1,listaC.distinct())
-        var listView: ListView = view.findViewById(R.id.categoriesView)
-        //listView.adapter = listViewAdapter
-        listView.adapter = e
-
-        listView.setOnItemClickListener{ _, _, position, _ ->
-            var id = listView.getItemIdAtPosition(position)
-            var chosenCategory = listaC.distinct()[id.toInt()]
-            var bundle = bundleOf("categoryName" to chosenCategory)
+        var categoriesView:RecyclerView  = view.findViewById(R.id.categoriesView)
+        categoriesView.layoutManager = LinearLayoutManager(context)
+        var adapter=CategoriesAdapter(CategoryList!!){
+            var categoryName = CategoryList!![it]
+            var bundle = bundleOf("categoryName" to categoryName)
             navController!!.navigate(
                 R.id.action_categoriesFragment_to_itemsFragment,
                 bundle
             )
         }
+        categoriesView.adapter = adapter
+
         return view
     }
 

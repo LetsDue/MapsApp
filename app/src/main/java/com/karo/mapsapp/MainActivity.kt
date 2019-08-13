@@ -7,6 +7,7 @@ import android.os.Build
 
 var pName:String=""
 var ItemsList:List<Item>?=null
+var CategoryList:MutableList<String>?=null
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
