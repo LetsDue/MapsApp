@@ -6,6 +6,7 @@ import android.content.ClipboardManager
 import android.content.Context.CLIPBOARD_SERVICE
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -40,11 +41,12 @@ class MainFragment : Fragment(), View.OnClickListener {
     val db = FirebaseFirestore.getInstance()
 
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        getItemsData()
+        addDatabaseListener()
         var toast: Toast = Toast.makeText(context, "E-mail został skopiowany", Toast.LENGTH_SHORT)
         val view = inflater!!.inflate(R.layout.fragment_main, container, false)
         clickTextView = view.findViewById(R.id.phoneText)
@@ -113,15 +115,19 @@ class MainFragment : Fragment(), View.OnClickListener {
         }
     }
 
-    fun getItemsData() {
-        db.collection("items")
-        .get()
-            .addOnSuccessListener { querySnapshot ->
-                // Successfully received data. List in querySnapshot.documents
-                ItemsList  = querySnapshot.toObjects(Item::class.java)
+    private fun addDatabaseListener() {
+        db.collection("items").addSnapshotListener{snapshot, e ->
+            if (e != null) {
+                Log.w("Tah", "Listen failed.", e)
+                return@addSnapshotListener
             }
-            .addOnFailureListener { exception ->
-                // An error occurred while getting data
+
+            if (snapshot != null && snapshot!=null) {
+                ItemsList  = snapshot.toObjects(Item::class.java)
+
+            } else {
+                Log.d("tag", "Current data: null")
             }
+        }
     }
 }

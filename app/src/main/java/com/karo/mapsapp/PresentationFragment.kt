@@ -4,14 +4,26 @@ package com.karo.mapsapp
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.provider.ContactsContract.CommonDataKinds.Website.URL
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.bumptech.glide.Glide
+import com.google.firebase.storage.FirebaseStorage
+import androidx.annotation.NonNull
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.signature.ObjectKey
+import com.google.android.gms.tasks.OnFailureListener
+import com.google.android.gms.tasks.OnSuccessListener
+
+
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -23,8 +35,10 @@ import androidx.appcompat.app.AppCompatActivity
  * A simple [Fragment] subclass.
  *
  */
+
 class PresentationFragment : Fragment() {
     var name:String="fail"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         name = arguments!!.getString("name")
@@ -36,6 +50,9 @@ class PresentationFragment : Fragment() {
     ): View? {
         var view = inflater.inflate(R.layout.fragment_presentation, container, false)
         var title="ItemView"
+
+        var logoView=view.findViewById<ImageView>(R.id.logoView)
+
         (activity as AppCompatActivity).supportActionBar?.title = title
         var textView:TextView = view.findViewById(R.id.itemText)
         textView.text = name
@@ -46,9 +63,6 @@ class PresentationFragment : Fragment() {
             val label = name
             val item: Item? = ItemsList?.find { it?.name == name }
             val localization:String = item?.localization?.latitude.toString()+","+item?.localization?.longitude.toString()
-
-            Log.i("ater",localization)
-
             val uriBegin = "geo:$localization"
             val query = "$localization($label)"
             val encodedQuery = Uri.encode(query)
@@ -59,7 +73,16 @@ class PresentationFragment : Fragment() {
             intent.setPackage("com.google.android.apps.maps")
             startActivity(intent)
         }
-        return view
-    }
 
+        val storageReference = FirebaseStorage.getInstance().reference.child("logos").child("Lotnisko.gif")
+        getLogo(logoView)
+       return view
+   }
+    private fun getLogo(logoView:ImageView)
+    {
+
+        Glide.with(this)
+            .load(ItemsList?.find{it.name==name}?.logoImageURL)
+            .into(logoView)
+    }
 }

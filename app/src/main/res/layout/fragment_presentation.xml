@@ -25,5 +25,12 @@
             app:layout_constraintHorizontal_bias="0.424" android:layout_marginTop="8dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintVertical_bias="0.405"/>
+    <ImageView
+                android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/logoView" app:layout_constraintEnd_toEndOf="parent" android:layout_marginEnd="8dp"
+            app:layout_constraintStart_toStartOf="parent" android:layout_marginStart="8dp"
+            app:layout_constraintHorizontal_bias="0.101" android:layout_marginTop="8dp"
+            app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

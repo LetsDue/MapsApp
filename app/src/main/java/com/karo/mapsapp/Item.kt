@@ -2,7 +2,7 @@ package com.karo.mapsapp
 
 import com.google.firebase.firestore.GeoPoint
 
-class Item (val name: String?=null, val category: List<String>?=null,val hours:String?=null ,val localization: GeoPoint?=null, val description: String?=null)
+class Item (val name: String?=null, val category: List<String>?=null,val logoImageURL:String?=null, val hours:String?=null ,val localization: GeoPoint?=null, val description: String?=null)
 {
 
 
