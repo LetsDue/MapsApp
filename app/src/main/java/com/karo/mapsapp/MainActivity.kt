@@ -14,7 +14,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         if(Build.VERSION.SDK_INT >= 21) {
             window.statusBarColor = 0xFF202058.toInt()
-            window.navigationBarColor = 0xFF202058.toInt()
+            window.navigationBarColor = 0xFF8080FF.toInt()
+
         }
     }
 

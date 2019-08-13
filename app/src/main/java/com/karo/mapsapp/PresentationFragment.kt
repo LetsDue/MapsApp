@@ -4,8 +4,6 @@ package com.karo.mapsapp
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.provider.ContactsContract.CommonDataKinds.Website.URL
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -16,14 +14,6 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
-import androidx.annotation.NonNull
-import com.bumptech.glide.load.engine.DiskCacheStrategy
-import com.bumptech.glide.request.RequestOptions
-import com.bumptech.glide.signature.ObjectKey
-import com.google.android.gms.tasks.OnFailureListener
-import com.google.android.gms.tasks.OnSuccessListener
-
-
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -51,7 +41,8 @@ class PresentationFragment : Fragment() {
         var view = inflater.inflate(R.layout.fragment_presentation, container, false)
         var title="ItemView"
 
-        var logoView=view.findViewById<ImageView>(R.id.logoView)
+        var logoView=view.findViewById<ImageView>(R.id.logoItemsView)
+        var logoBigView=view.findViewById<ImageView>(R.id.logoBigView)
 
         (activity as AppCompatActivity).supportActionBar?.title = title
         var textView:TextView = view.findViewById(R.id.itemText)
@@ -75,14 +66,18 @@ class PresentationFragment : Fragment() {
         }
 
         val storageReference = FirebaseStorage.getInstance().reference.child("logos").child("Lotnisko.gif")
-        getLogo(logoView)
+        getLogo(logoView, logoBigView)
        return view
    }
-    private fun getLogo(logoView:ImageView)
+    private fun getLogo(logoView:ImageView, logoBigView:ImageView)
     {
 
         Glide.with(this)
             .load(ItemsList?.find{it.name==name}?.logoImageURL)
             .into(logoView)
+        Glide.with(this)
+            .load(ItemsList?.find{it.name==name}?.logoBigImageURL)
+            .into(logoBigView)
+
     }
 }

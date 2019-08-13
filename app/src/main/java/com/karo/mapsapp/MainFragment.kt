@@ -75,7 +75,12 @@ class MainFragment : Fragment(), View.OnClickListener {
         imageViewCategory = view.findViewById(R.id.categoriesIcon)
         imageViewCategory.setOnClickListener()
         {
-            navController!!.navigate(R.id.action_mainFragment_to_categoriesFragment)
+            if(!ItemsList.isNullOrEmpty()) {
+                navController!!.navigate(R.id.action_mainFragment_to_categoriesFragment)
+            }else
+            {
+                Toast.makeText(context, "Błąd pobierania, wymagany dostęp do internetu", Toast.LENGTH_SHORT).show()
+            }
         }
 
 

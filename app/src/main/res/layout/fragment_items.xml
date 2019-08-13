@@ -4,12 +4,7 @@
              android:layout_width="match_parent"
              android:layout_height="match_parent"
              tools:context=".ItemsFragment">
-
-    <!-- TODO: Update blank fragment layout -->
-
-
-    <ListView
-            android:id = "@+id/itemsView"
+    <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:layout_height="match_parent" android:id="@+id/itemsView"/>
 </FrameLayout>
