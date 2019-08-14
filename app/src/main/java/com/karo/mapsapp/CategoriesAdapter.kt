@@ -3,28 +3,26 @@ package com.karo.mapsapp
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 
-class CategoriesAdapter(val Category:MutableList<String>, val listener: (Int) -> Unit) : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
+class CategoriesAdapter(var Categories:MutableList<String>, val listener: (Int) -> Unit) : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view:View= LayoutInflater.from(parent.context).inflate(R.layout.category_row, parent, false)
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = Category.size
+    override fun getItemCount(): Int = Categories.size
 
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
 
-        holder.name.text=Category[position]
+        holder.name.text=Categories[position]
         /*Glide.with(holder.logoViewItems.context)
             .load(ItemsList?.find{it.name==items[position].name}?.logoImageURL)
             .into(holder.logoViewItems)*/
-        return holder.bind(Category[position], position, listener)
+        return holder.bind(Categories[position], position, listener)
     }
 
 
@@ -37,5 +35,10 @@ class CategoriesAdapter(val Category:MutableList<String>, val listener: (Int) ->
                 listener(pos)
             }
         }
+    }
+    fun filterList(newList:MutableList<String>)
+    {
+        Categories = newList
+        notifyDataSetChanged()
     }
 }

@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class ItemsAdapter(val items: MutableList<Item>,val listener: (Int) -> Unit) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class ItemsAdapter(var items: MutableList<Item>,val listener: (Int) -> Unit) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view:View= LayoutInflater.from(parent.context).inflate(R.layout.item_row, parent, false)
@@ -37,6 +37,11 @@ class ItemsAdapter(val items: MutableList<Item>,val listener: (Int) -> Unit) : R
                 listener(pos)
             }
         }
+    }
+    fun filterList(newList:MutableList<Item>)
+    {
+        items = newList
+        notifyDataSetChanged()
     }
 
 }

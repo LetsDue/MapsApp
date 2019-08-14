@@ -90,6 +90,12 @@ class MainFragment : Fragment(), View.OnClickListener {
 
         searchIcon.setOnClickListener()
         {
+            if(!ItemsList.isNullOrEmpty()) {
+                navController!!.navigate(R.id.action_mainFragment_to_searchFragment)
+            }else
+            {
+                Toast.makeText(context, "Błąd pobierania, wymagany dostęp do internetu", Toast.LENGTH_SHORT).show()
+            }
 
         }
 

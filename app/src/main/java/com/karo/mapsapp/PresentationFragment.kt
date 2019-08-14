@@ -1,6 +1,7 @@
 package com.karo.mapsapp
 
 
+import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -14,6 +15,9 @@ import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.storage.FirebaseStorage
+import android.content.pm.PackageManager
+import androidx.core.view.isGone
+import kotlinx.android.synthetic.main.fragment_presentation.*
 
 
 // TODO: Rename parameter arguments, choose names that match
@@ -64,20 +68,92 @@ class PresentationFragment : Fragment() {
             intent.setPackage("com.google.android.apps.maps")
             startActivity(intent)
         }
-
+        var facebookImage: ImageView = view.findViewById(R.id.facebookImage)
+        if(ItemsList?.find{it.name==name}?.facebookURL.isNullOrEmpty() || ItemsList?.find{it.name==name}?.facebookPageID.isNullOrEmpty())
+        {
+            facebookImage.isGone = true
+        }else {
+            facebookImage.setOnClickListener()
+            {
+                val facebookIntent = Intent(Intent.ACTION_VIEW)
+                val facebookUrl = getFacebookPageURL(context!!)
+                facebookIntent.data = Uri.parse(facebookUrl)
+                startActivity(facebookIntent)
+            }
+        }
         val storageReference = FirebaseStorage.getInstance().reference.child("logos").child("Lotnisko.gif")
         getLogo(logoView, logoBigView)
-       return view
+
+
+
+        //godziny
+        var itemH:Item = ItemsList?.find { it?.name == name }!!
+        var hoursView:TextView = view.findViewById(R.id.hoursView)
+        if(!itemH.hours.isNullOrEmpty()) {
+            var hours =
+                """
+        ${itemH.hours?.get(0)}
+        ${itemH.hours?.get(1)}
+        ${itemH.hours?.get(2)}
+        ${itemH.hours?.get(3)}
+        ${itemH.hours?.get(4)}
+        ${itemH.hours?.get(5)}
+        ${itemH.hours?.get(6)}
+    """.trimIndent()
+            hoursView.text = hours
+        }else
+        {
+            var hoursNamesView: TextView = view.findViewById(R.id.hoursNamesView)
+            hoursView.isGone = true
+            hoursNamesView.isGone = true
+        }
+
+        var phonesString:String =""
+        var phonesView: TextView = view.findViewById(R.id.phonesView)
+        if(!itemH.phones.isNullOrEmpty()) {
+            itemH.phones!!.forEach { str ->
+                phonesString = phonesString + str + "\n"
+            }
+            phonesView.text = phonesString
+        }else{
+            var phoneLogo:ImageView = view.findViewById(R.id.phoneLogo)
+            phonesView.isGone = true
+            phoneLogo.isGone = true
+        }
+
+        return view
    }
     private fun getLogo(logoView:ImageView, logoBigView:ImageView)
     {
-
+        if(ItemsList?.find{it.name==name}?.logoBigImageURL.isNullOrEmpty())
+        {
+            logoBigView.isGone = true
+        }
         Glide.with(this)
             .load(ItemsList?.find{it.name==name}?.logoImageURL)
             .into(logoView)
         Glide.with(this)
             .load(ItemsList?.find{it.name==name}?.logoBigImageURL)
             .into(logoBigView)
+    }
+    private fun getFacebookPageURL(context: Context): String {
+
+        var facebookURL = ItemsList?.find{it.name==name}?.facebookURL
+        var facebookPageID = ItemsList?.find{it.name==name}?.facebookPageID
+        val packageManager = context.packageManager
+        return try {
+            val versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode
+            if (versionCode >= 3002850) { //newer versions of fb app
+                "fb://facewebmodal/f?href=$facebookURL"
+            } else { //older versions of fb app
+                "fb://page/$facebookPageID"
+            }
+        } catch (e: PackageManager.NameNotFoundException) {
+            facebookURL //normal web url
+        }!!
 
     }
 }
+
+
+
