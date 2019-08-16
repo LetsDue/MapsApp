@@ -9,4 +9,6 @@
     <string name="ConnectionErrorString">Błąd pobierania, wymagany dostęp do internetu</string>
     <string name="EmailCopied">E-mail został skopiowany</string>
     <string name="NumberCopied">Numer został skopiowany</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="contactNumber">111 111 111</string>
 </resources>
