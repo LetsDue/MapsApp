@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Build
 
-var pName:String=""
 var ItemsList:MutableList<Item>?=null
 var CategoryList:MutableList<String>?=null
 class MainActivity : AppCompatActivity() {

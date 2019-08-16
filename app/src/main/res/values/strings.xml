@@ -4,4 +4,9 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="weekDays">Poniedziałek \nWtorek \nŚroda \nCzwartek \nPiątek \nSobota \nNiedziela</string>
+    <string name="Szukaj_string">Szukaj</string>
+    <string name="AppNameString">Aplikacja</string>
+    <string name="ConnectionErrorString">Błąd pobierania, wymagany dostęp do internetu</string>
+    <string name="EmailCopied">E-mail został skopiowany</string>
+    <string name="NumberCopied">Numer został skopiowany</string>
 </resources>

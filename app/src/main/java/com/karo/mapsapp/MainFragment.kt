@@ -21,24 +21,13 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_main.*
 
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
-
 class MainFragment : Fragment(), View.OnClickListener {
-    lateinit var navController: NavController
-    lateinit var myClipboard: ClipboardManager
-    lateinit var clickTextView: TextView
-    lateinit var clickTextViewE: TextView
-    lateinit var imageViewCategory: ImageView
-    val db = FirebaseFirestore.getInstance()
+    private lateinit var navController: NavController
+    private lateinit var myClipboard: ClipboardManager
+    private lateinit var clickTextView: TextView
+    private lateinit var clickTextViewE: TextView
+    private lateinit var imageViewCategory: ImageView
+    private val db = FirebaseFirestore.getInstance()
 
 
 
@@ -48,53 +37,49 @@ class MainFragment : Fragment(), View.OnClickListener {
     ): View? {
         CategoryList = mutableListOf()
         addDatabaseListener()
-        var toast: Toast = Toast.makeText(context, "E-mail został skopiowany", Toast.LENGTH_SHORT)
-        val view = inflater!!.inflate(R.layout.fragment_main, container, false)
+        var toast: Toast =  Toast.makeText(context,  getString(R.string.EmailCopied), Toast.LENGTH_SHORT)
+        val view = inflater.inflate(R.layout.fragment_main, container, false)
         clickTextView = view.findViewById(R.id.phoneText)
         clickTextView.setOnClickListener()
         {
-            var myClip = ClipData.newPlainText("text", phoneText.text)
-            myClipboard?.primaryClip=myClip
-            if (toast!= null) {
-                toast.cancel()
-            }
-            toast= Toast.makeText(context, "Numer został skopiowany", Toast.LENGTH_SHORT)
+            val myClip: ClipData = ClipData.newPlainText("number", phoneText.text)
+            myClipboard.primaryClip =myClip
+            toast.cancel()
+            toast= Toast.makeText(context, getString(R.string.NumberCopied), Toast.LENGTH_SHORT)
             toast.show()
         }
         clickTextViewE = view.findViewById(R.id.emailText)
         clickTextViewE.setOnClickListener()
         {
-            var myClip = ClipData.newPlainText("text", emailText.text)
-            myClipboard?.primaryClip=myClip
+            val myClip = ClipData.newPlainText("text", emailText.text)
+            myClipboard.primaryClip =myClip
 
-            if (toast!= null) {
-                toast.cancel()
-            }
-            toast= Toast.makeText(context, "E-mail został skopiowany", Toast.LENGTH_SHORT)
+            toast.cancel()
+            toast= Toast.makeText(context, getString(R.string.EmailCopied), Toast.LENGTH_SHORT)
             toast.show()
         }
         imageViewCategory = view.findViewById(R.id.categoriesIcon)
         imageViewCategory.setOnClickListener()
         {
             if(!ItemsList.isNullOrEmpty()) {
-                navController!!.navigate(R.id.action_mainFragment_to_categoriesFragment)
+                navController.navigate(R.id.action_mainFragment_to_categoriesFragment)
             }else
             {
-                Toast.makeText(context, "Błąd pobierania, wymagany dostęp do internetu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.ConnectionErrorString), Toast.LENGTH_SHORT).show()
             }
         }
 
 
-        val textView = view.findViewById<TextView>(R.id.textView)
+        //val textView = view.findViewById<TextView>(R.id.textView)
         val searchIcon = view.findViewById<ImageView>(R.id.searchIcon)
 
         searchIcon.setOnClickListener()
         {
             if(!ItemsList.isNullOrEmpty()) {
-                navController!!.navigate(R.id.action_mainFragment_to_searchFragment)
+                navController.navigate(R.id.action_mainFragment_to_searchFragment)
             }else
             {
-                Toast.makeText(context, "Błąd pobierania, wymagany dostęp do internetu", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.ConnectionErrorString), Toast.LENGTH_SHORT).show()
             }
 
         }
@@ -106,7 +91,7 @@ class MainFragment : Fragment(), View.OnClickListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var title = "Aplikacja"
+        val title = getString(R.string.AppNameString)
         (activity as AppCompatActivity).supportActionBar?.title = title
 
         (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(0xFF242460.toInt()))

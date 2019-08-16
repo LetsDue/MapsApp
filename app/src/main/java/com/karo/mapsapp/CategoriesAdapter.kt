@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
-class CategoriesAdapter(var Categories:MutableList<String>, val listener: (Int) -> Unit) : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
+class CategoriesAdapter(private var Categories:MutableList<String>, private val listener: (Int) -> Unit) : RecyclerView.Adapter<CategoriesAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view:View= LayoutInflater.from(parent.context).inflate(R.layout.category_row, parent, false)
@@ -22,7 +22,7 @@ class CategoriesAdapter(var Categories:MutableList<String>, val listener: (Int) 
         /*Glide.with(holder.logoViewItems.context)
             .load(ItemsList?.find{it.name==items[position].name}?.logoImageURL)
             .into(holder.logoViewItems)*/
-        return holder.bind(Categories[position], position, listener)
+        return holder.bind(position, listener)
     }
 
 
@@ -30,7 +30,7 @@ class CategoriesAdapter(var Categories:MutableList<String>, val listener: (Int) 
     {
         val name:TextView = itemView.findViewById(R.id.categoryName)
         //val logoViewItems: ImageView = itemView.findViewById(R.id.logoItemsView)
-        fun bind(category: String, pos: Int, listener: (Int) -> Unit) = with(itemView) {
+        fun bind(pos: Int, listener: (Int) -> Unit) = with(itemView) {
             this.setOnClickListener {
                 listener(pos)
             }

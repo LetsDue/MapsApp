@@ -23,11 +23,11 @@ import androidx.recyclerview.widget.RecyclerView
  *
  */
 class ItemsFragment : Fragment() {
-    var categoryName:String = ""
-    lateinit var navController: NavController
+    private var categoryName:String = ""
+    private lateinit var navController: NavController
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        categoryName = arguments!!.getString("categoryName")
+        categoryName = arguments?.getString("categoryName") ?: ""
 
     }
 
@@ -36,14 +36,14 @@ class ItemsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        var view = inflater.inflate(R.layout.fragment_items, container, false)
+        val view = inflater.inflate(R.layout.fragment_items, container, false)
 
         val itemsView:RecyclerView=view.findViewById(R.id.itemsView)
         itemsView.layoutManager = LinearLayoutManager(context)
 
-        var title = categoryName
+        val title = categoryName
         (activity as AppCompatActivity).supportActionBar?.title = title
-        var categoryFoundList : MutableList<Item> = mutableListOf()
+        val categoryFoundList : MutableList<Item> = mutableListOf()
 
         ItemsList?.forEach{ a->
                     if(a.category!!.contains(categoryName))
@@ -51,10 +51,10 @@ class ItemsFragment : Fragment() {
                         categoryFoundList.add(a)
                     }
             }
-        var adapter=ItemsAdapter(categoryFoundList){
-            var name = categoryFoundList[it].name
-            var bundle = bundleOf("name" to name)
-            navController!!.navigate(
+        val adapter=ItemsAdapter(categoryFoundList){
+            val name = categoryFoundList[it].name
+            val bundle = bundleOf("name" to name)
+            navController.navigate(
                 R.id.action_itemsFragment_to_presentationFragment,
                 bundle
             )

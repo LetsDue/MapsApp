@@ -12,51 +12,38 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
-import com.google.firebase.storage.FirebaseStorage
 import android.content.pm.PackageManager
 import androidx.core.view.isGone
-import kotlinx.android.synthetic.main.fragment_presentation.*
 
-
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-//private const val ARG_PARAM1 = "param1"
-//private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- *
- */
 
 class PresentationFragment : Fragment() {
     var name:String="fail"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        name = arguments!!.getString("name")
+        name = arguments?.getString("name") ?: ""
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        var view = inflater.inflate(R.layout.fragment_presentation, container, false)
-        var title="ItemView"
+        val view = inflater.inflate(R.layout.fragment_presentation, container, false)
+        //val title="ItemView"
 
-        var logoView=view.findViewById<ImageView>(R.id.logoItemsView)
-        var logoBigView=view.findViewById<ImageView>(R.id.logoBigView)
+        val logoView=view.findViewById<ImageView>(R.id.logoItemsView)
+        val logoBigView=view.findViewById<ImageView>(R.id.logoBigView)
 
-        (activity as AppCompatActivity).supportActionBar?.title = title
-        var textView:TextView = view.findViewById(R.id.itemText)
+        //(activity as AppCompatActivity).supportActionBar?.title = title
+        val textView:TextView = view.findViewById(R.id.itemText)
         textView.text = name
 
-        var mapBtn:ImageButton= view.findViewById(R.id.mapBtn)
+        val mapBtn:ImageButton= view.findViewById(R.id.mapBtn)
         mapBtn.setOnClickListener()
         {
             val label = name
-            val item: Item? = ItemsList?.find { it?.name == name }
+            val item: Item? = ItemsList?.find { it.name == name }
             val localization:String = item?.localization?.latitude.toString()+","+item?.localization?.longitude.toString()
             val uriBegin = "geo:$localization"
             val query = "$localization($label)"
@@ -68,7 +55,7 @@ class PresentationFragment : Fragment() {
             intent.setPackage("com.google.android.apps.maps")
             startActivity(intent)
         }
-        var facebookImage: ImageView = view.findViewById(R.id.facebookImage)
+        val facebookImage: ImageView = view.findViewById(R.id.facebookImage)
         if(ItemsList?.find{it.name==name}?.facebookURL.isNullOrEmpty() || ItemsList?.find{it.name==name}?.facebookPageID.isNullOrEmpty())
         {
             facebookImage.isGone = true
@@ -81,45 +68,53 @@ class PresentationFragment : Fragment() {
                 startActivity(facebookIntent)
             }
         }
-        val storageReference = FirebaseStorage.getInstance().reference.child("logos").child("Lotnisko.gif")
+        //val storageReference: StorageReference = FirebaseStorage.getInstance().reference.child("logos").child("Lotnisko.gif")
         getLogo(logoView, logoBigView)
 
 
 
         //godziny
-        var itemH:Item = ItemsList?.find { it?.name == name }!!
-        var hoursView:TextView = view.findViewById(R.id.hoursView)
+        val itemH:Item = ItemsList?.find { it.name == name }!!
+        val hoursView:TextView = view.findViewById(R.id.hoursView)
         if(!itemH.hours.isNullOrEmpty()) {
-            var hours =
+            val hours =
                 """
-        ${itemH.hours?.get(0)}
-        ${itemH.hours?.get(1)}
-        ${itemH.hours?.get(2)}
-        ${itemH.hours?.get(3)}
-        ${itemH.hours?.get(4)}
-        ${itemH.hours?.get(5)}
-        ${itemH.hours?.get(6)}
+        ${itemH.hours[0]}
+        ${itemH.hours[1]}
+        ${itemH.hours[2]}
+        ${itemH.hours[3]}
+        ${itemH.hours[4]}
+        ${itemH.hours[5]}
+        ${itemH.hours[6]}
     """.trimIndent()
             hoursView.text = hours
         }else
         {
-            var hoursNamesView: TextView = view.findViewById(R.id.hoursNamesView)
+            val hoursNamesView: TextView = view.findViewById(R.id.hoursNamesView)
             hoursView.isGone = true
             hoursNamesView.isGone = true
         }
 
-        var phonesString:String =""
-        var phonesView: TextView = view.findViewById(R.id.phonesView)
+        var phonesString =""
+        val phonesView: TextView = view.findViewById(R.id.phonesView)
         if(!itemH.phones.isNullOrEmpty()) {
-            itemH.phones!!.forEach { str ->
+            itemH.phones.forEach { str ->
                 phonesString = phonesString + str + "\n"
             }
             phonesView.text = phonesString
         }else{
-            var phoneLogo:ImageView = view.findViewById(R.id.phoneLogo)
+            val phoneLogo:ImageView = view.findViewById(R.id.phoneLogo)
             phonesView.isGone = true
             phoneLogo.isGone = true
         }
+
+        val descriptionView: TextView = view.findViewById(R.id.descriptionView)
+        if(!itemH.description.isNullOrEmpty()) {
+            descriptionView.text = itemH.description
+        }else{
+            descriptionView.isGone = true
+        }
+
 
         return view
    }
@@ -138,8 +133,8 @@ class PresentationFragment : Fragment() {
     }
     private fun getFacebookPageURL(context: Context): String {
 
-        var facebookURL = ItemsList?.find{it.name==name}?.facebookURL
-        var facebookPageID = ItemsList?.find{it.name==name}?.facebookPageID
+        val facebookURL = ItemsList?.find{it.name==name}?.facebookURL
+        val facebookPageID = ItemsList?.find{it.name==name}?.facebookPageID
         val packageManager = context.packageManager
         return try {
             val versionCode = packageManager.getPackageInfo("com.facebook.katana", 0).versionCode

@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class ItemsAdapter(var items: MutableList<Item>,val listener: (Int) -> Unit) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
+class ItemsAdapter(private var items: MutableList<Item>, private val listener: (Int) -> Unit) : RecyclerView.Adapter<ItemsAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             val view:View= LayoutInflater.from(parent.context).inflate(R.layout.item_row, parent, false)
@@ -24,7 +24,7 @@ class ItemsAdapter(var items: MutableList<Item>,val listener: (Int) -> Unit) : R
         Glide.with(holder.logoViewItems.context)
             .load(ItemsList?.find{it.name==items[position].name}?.logoImageURL)
             .into(holder.logoViewItems)
-        return holder.bind(items[position], position, listener)
+        return holder.bind(position, listener)
     }
 
 
@@ -32,7 +32,7 @@ class ItemsAdapter(var items: MutableList<Item>,val listener: (Int) -> Unit) : R
     {
         val name:TextView = itemView.findViewById(R.id.name)
         val logoViewItems: ImageView = itemView.findViewById(R.id.logoItemsView)
-        fun bind(item: Item, pos: Int, listener: (Int) -> Unit) = with(itemView) {
+        fun bind(pos: Int, listener: (Int) -> Unit) = with(itemView) {
             this.setOnClickListener {
                 listener(pos)
             }
